@@ -34,7 +34,7 @@ function InputSample() {
     <div>
       <input name="name" value={name} placeholder="이름" onChange={onChange} ref={nameInput}/>
       <input name="nickname" value={nickname} placeholder="닉네임" onChange={onChange} />
-      <button onClick={onReset}>초기화ssss</button>
+      <button onClick={onReset}>초기화</button>
       <div>
         <b>값: </b>
         {name} ({nickname})
