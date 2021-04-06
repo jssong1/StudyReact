@@ -1,6 +1,8 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useContext} from 'react';
+import { UserDispatch } from './AppHooks';
 
-const User = React.memo(function User({ user, onRemove,onToggle }) {
+const User = React.memo(function User({ user}) {
+  const dispatch = useContext(UserDispatch);
   /**
    * useEffect 를 사용 할 때에는 첫번째 파라미터에는 함수, 두번째 파라미터에는 의존값이 들어있는 배열 (deps)을 넣습니다. 만약에 deps 배열을 비우게 된다면, 컴포넌트가 처음 나타날때에만 useEffect 에 등록한 함수가 호출됩니다.
      useEffect 에서는 함수를 반환 할 수 있는데 이를 cleanup 함수라고 부릅니다. cleanup 함수는 useEffect 에 대한 뒷정리를 해준다고 이해하시면 되는데요, deps 가 비어있는 경우에는 컴포넌트가 사라질 때 cleanup 함수가 호출됩니다.
@@ -21,17 +23,21 @@ const User = React.memo(function User({ user, onRemove,onToggle }) {
         cursor:'pointer',
         color:user.active? 'green' :'black'
       }}
-        onClick={()=>onToggle(user.id)}
+        onClick={()=>{
+          dispatch({ type: 'TOGGLE_USER', id: user.id });
+        }}
       >
         {user.username}
       </b> &nbsp;
       <span>({user.email}) {user.id}</span>
-      <button onClick={()=>onRemove(user.id) }>삭제</button>
+      <button onClick={()=>{
+        dispatch({ type: 'REMOVE_USER', id: user.id });
+      } }>삭제</button>
     </div>
   );
 });
 
-function UserList({users, onRemove, onToggle}) {
+function UserList({users}) {
   return (
     <div>
  {/** <User user={users[0]} />
@@ -45,8 +51,6 @@ function UserList({users, onRemove, onToggle}) {
       <User 
         user={user} 
         key={user.id} 
-        onRemove={onRemove}
-        onToggle={onToggle}
       />
       ))}
 
@@ -60,4 +64,4 @@ function UserList({users, onRemove, onToggle}) {
 }
 
 
-export default UserList;
+export default React.memo(UserList);

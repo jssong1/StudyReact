@@ -1,10 +1,10 @@
 import React, { useRef,useState, useMemo, useCallback }  from 'react';
 import Hello from './Hello';
 import Wrapper from './Wrapper';
-import Counter from './Counter';
 import InputSample from './InputSample';
 import UserList from './UserList';
 import CreateUser from './CreateUser';
+
 
 function countActiveUsers(users) {
   console.log('활성 사용자 수를 세는중...');
@@ -102,7 +102,6 @@ function App() {
       <Hello name="react" color="red" isSpecial={true}/>
       <Hello color="pink"/>
     </Wrapper>
-    <Counter />
     <InputSample />
     <CreateUser 
       username={username}
